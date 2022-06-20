@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import "package:latlong2/latlong.dart" as latLng;
+import 'package:mapbox_app/screens/map_screen.dart';
 
 void main() {
   runApp(MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -26,38 +28,27 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: FlutterMap(
-        options: MapOptions(
-          center: latLng.LatLng(13.08, 80.27),
-          zoom: 13.0,
-        ),
-        layers: [
-          TileLayerOptions(
-            urlTemplate: "https://api.mapbox.com/styles/v1/vishaaaal/cl3jlumor002114mli1ayhetg/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoidmlzaGFhYWFsIiwiYSI6ImNsM2psYTdqdTAzb24zY3A2am01YWg4Y3cifQ.QY8wwhBOolWWkEMkb-Zzhw",
-            additionalOptions: {
-              'accessToken':'pk.eyJ1IjoidmlzaGFhYWFsIiwiYSI6ImNsM2psYTdqdTAzb24zY3A2am01YWg4Y3cifQ.QY8wwhBOolWWkEMkb-Zzhw',
-              'id' : 'mapbox.mapbox-streets-v8'
-            },
-            attributionBuilder: (_) {
-              return Text("© OpenStreetMap contributors");
-            },
-          ),
-          /*MarkerLayerOptions(
-            markers: [
-              Marker(
-                width: 80.0,
-                height: 80.0,
-                point: latLng.LatLng(51.5, -0.09),
-                builder: (ctx) =>
-                    Container(
-                      child: FlutterLogo(),
-                    ),
-              ),
-            ],
-          ),*/
-        ],
-      )
-    );
+    return MapScreen();
   }
+}
+
+class Coord{
+  Coord({required this.lat,required this.lng});
+  double lat;
+  double lng;
+
+  factory Coord.fromJson(Map<String,dynamic> data){
+    double lat = data['lat'] as double;
+    double lng = data['lng'] as double;
+    return Coord(lat: lat ?? 12.995866166666667, lng: lng ?? 80.19463766666667);
+  }
+
+  Map<String, dynamic> toJson(){
+    return {
+  'lat':lat,
+  'lng':lng
+   };
+  }
+
+
 }
