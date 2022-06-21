@@ -36,22 +36,6 @@ class _MapScreen extends State<MapScreen> {
        setState(() {
           _lat = double.parse(convert.jsonDecode(data)["lat"]);
           _lng = double.parse(convert.jsonDecode(data)["lng"]);
-          // _markers.add(
-          //     Marker(
-          //       width: 80.0,
-          //       height: 80.0,
-          //       point: latLng.LatLng(_lat, _lng),
-          //       builder: (ctx) =>
-          //           Container(
-          //             child: Icon(
-          //               Icons.location_pin,
-          //               color: Colors.pink,
-          //               size: 24.0,
-          //               semanticLabel: 'Text to announce in accessibility modes',
-          //             ),
-          //           ),
-          //     )
-          // );
        });
        print(data);
        print(_lat);
@@ -71,22 +55,6 @@ class _MapScreen extends State<MapScreen> {
         _lat = double.parse(convert.jsonDecode(data)["lat"]);
         _lng = double.parse(convert.jsonDecode(data)["lng"]);
         _markers.clear();
-        _markers.add(
-            Marker(
-              width: 80.0,
-              height: 80.0,
-              point: latLng.LatLng(_lat, _lng),
-              builder: (ctx) =>
-                  Container(
-                    child: Icon(
-                      Icons.location_pin,
-                      color: Colors.pink,
-                      size: 24.0,
-                      semanticLabel: 'Text to announce in accessibility modes',
-                    ),
-                  ),
-            )
-        );
       });
       print(data);
       print(_lat);
@@ -105,7 +73,7 @@ class _MapScreen extends State<MapScreen> {
         body: _lat > 0 ? FlutterMap(
           options: MapOptions(
             center: latLng.LatLng(_lat, _lng),
-            zoom: 13.0,
+            zoom: 15.0,
           ),
           layers: [
             TileLayerOptions(
@@ -119,7 +87,22 @@ class _MapScreen extends State<MapScreen> {
               },
             ),
             MarkerLayerOptions(
-              markers: List<Marker>.of(_markers),
+              markers: [
+                Marker(
+                  width: 80.0,
+                  height: 80.0,
+                  point: latLng.LatLng(_lat, _lng),
+                  builder: (ctx) =>
+                      Container(
+                        child: Icon(
+                          Icons.location_pin,
+                          color: Colors.pink,
+                          size: 30.0,
+                          semanticLabel: 'Text to announce in accessibility modes',
+                        ),
+                      ),
+                )
+              ],
             ),
           ],
         ) : Center(
@@ -127,15 +110,6 @@ class _MapScreen extends State<MapScreen> {
             color: Colors.black,
             strokeWidth: 5,
           ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-        floatingActionButton: FloatingActionButton(
-          // isExtended: true,
-          child: Icon(Icons.refresh_outlined),
-          backgroundColor: Colors.green,
-          onPressed: () {
-            handleRefresh(newSetState);
-          },
         ),
       );
     }
